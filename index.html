@@ -20,11 +20,24 @@
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 20px;
+            padding: 30px 20px;
             text-align: center;
         }
         body.dark-mode header {
             background-color: #111;
+        }
+        header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+        }
+        #welcome {
+            font-size: 1.4em;
+            margin: 0;
+            font-weight: bold;
+            color: #1abc9c;
+        }
+        body.dark-mode #welcome {
+            color: #7fffd4;
         }
         nav {
             background-color: #34495e;
@@ -108,21 +121,15 @@
         button:hover {
             background-color: #1abc9c;
         }
-        #welcome {
-            font-size: 1.3em;
-            margin: 15px 0;
-            font-weight: bold;
-            color: #1abc9c;
-        }
         .toggle-container {
-            margin-top: 10px;
+            margin-top: 15px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>Welcome to My Portfolio</h1>
+        <h1 id="main-title">Elic's Portfolio</h1>
         <div id="welcome"></div>
         
         <!-- Dark Mode Toggle -->
@@ -153,7 +160,7 @@
         <ul id="skills-list"></ul>
     </section>
 
-    <!-- NEW: Featured Content Section (Week 2) -->
+    <!-- Featured Content Section -->
     <section id="featured">
         <h2>Featured Content</h2>
         
@@ -211,11 +218,8 @@
     </section>
 
     <script>
-        // ==================== WEEK 2 FEATURES ====================
-
-        // 1. Skills Array + Loop (forEach)
+        // Skills array and loop to display them
         const skills = ["PowerBI", "GitHub", "M code", "Python", "Java"];
-        
         const skillsList = document.getElementById("skills-list");
         skills.forEach(skill => {
             const li = document.createElement("li");
@@ -223,8 +227,8 @@
             skillsList.appendChild(li);
         });
 
-        // 2. Conditional Logic for Featured Content
-        const projectCount = 3;                     // We have 3 projects listed
+        // Show or hide featured content based on number of projects
+        const projectCount = 3;
         const universityDiv = document.getElementById("university-resources");
         const personalDiv = document.getElementById("personal-projects");
 
@@ -232,17 +236,17 @@
             universityDiv.style.display = "block";
             personalDiv.style.display = "block";
         } else {
-            universityDiv.style.display = "none";   // Hide University Resources
-            personalDiv.style.display = "block";    // Show only Personal Projects
+            universityDiv.style.display = "none";
+            personalDiv.style.display = "block";
         }
 
-        // 3. Dark Mode Toggle
+        // Dark mode toggle
         const darkModeToggle = document.getElementById("darkModeToggle");
         darkModeToggle.addEventListener("change", function() {
             document.body.classList.toggle("dark-mode", this.checked);
         });
 
-        // 4. Personalized Welcome Message (kept from Week 1)
+        // Welcome message with user name
         function welcomeUser() {
             let userName = prompt("Please enter your name:");
             const welcomeDiv = document.getElementById("welcome");
@@ -254,23 +258,22 @@
             }
         }
 
-        // 5. Interactive Form Submission
+        // Contact form with confirmation message
         const contactForm = document.getElementById("contactForm");
-        
         contactForm.addEventListener("submit", function(event) {
-            event.preventDefault();   // Prevent page refresh
+            event.preventDefault();
             
             const name = document.getElementById("name").value.trim();
             
             if (name) {
                 alert(`Thank you, ${name}! Your message has been sent successfully. 🎉`);
-                contactForm.reset();   // Clear form after submission
+                contactForm.reset();
             } else {
                 alert("Please enter your name before submitting.");
             }
         });
 
-        // Initialize everything
+        // Run welcome when page loads
         window.onload = welcomeUser;
     </script>
 
