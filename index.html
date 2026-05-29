@@ -128,6 +128,15 @@
         .toggle-container {
             margin-top: 15px;
         }
+
+        /* Style for the dynamic status message */
+        #form-status {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -189,7 +198,7 @@
     </section>
 
     <section id="projects">
-        <h2>Projects</h2>
+        <h2 id="projects-heading">Projects</h2>
         
         <div class="project">
             <h3>Project 1: Personal Portfolio Website</h3>
@@ -218,6 +227,7 @@
             <input type="text" id="subject" placeholder="Subject" required>
             <textarea id="message" rows="6" placeholder="Your Message" required></textarea>
             <button type="submit">Send Message</button>
+            <div id="form-status"></div>
         </form>
     </section>
 
@@ -262,23 +272,74 @@
             }
         }
 
-        // Contact form with confirmation message
+        // Dynamically add a new paragraph to the About section
+        function addRecentUpdate() {
+            const aboutSection = document.getElementById("about");
+            const newParagraph = document.createElement("p");
+            newParagraph.innerHTML = "<strong>Recent Update:</strong> I just completed enhancing this portfolio with dynamic JavaScript features.";
+            newParagraph.style.fontStyle = "italic";
+            newParagraph.style.color = "#2c3e50";
+            aboutSection.appendChild(newParagraph);
+        }
+
+        // Modify existing elements using selectors
+        function modifyExistingElements() {
+            // Update Projects heading
+            const projectsHeading = document.getElementById("projects-heading");
+            projectsHeading.textContent = "My Featured Projects";
+            projectsHeading.style.borderBottom = "3px solid #1abc9c";
+            projectsHeading.style.paddingBottom = "10px";
+            
+            // Modify main title styling
+            const mainTitle = document.getElementById("main-title");
+            mainTitle.style.letterSpacing = "1px";
+        }
+
+        // Enhanced contact form with loading message and timed confirmation
         const contactForm = document.getElementById("contactForm");
+        const formStatus = document.getElementById("form-status");
+
         contactForm.addEventListener("submit", function(event) {
             event.preventDefault();
             
             const name = document.getElementById("name").value.trim();
             
-            if (name) {
-                alert(`Thank you, ${name}! Your message has been sent successfully. 🎉`);
-                contactForm.reset();
-            } else {
+            if (!name) {
                 alert("Please enter your name before submitting.");
+                return;
             }
+
+            // Show loading message
+            formStatus.textContent = "Sending message...";
+            formStatus.style.backgroundColor = "#f0ad4e";
+            formStatus.style.color = "white";
+
+            // Disable submit button
+            const submitButton = contactForm.querySelector("button");
+            submitButton.disabled = true;
+            submitButton.textContent = "Sending...";
+
+            // Use setTimeout to simulate sending time
+            setTimeout(function() {
+                formStatus.textContent = `Thank you, ${name}! Your message has been sent successfully. 🎉`;
+                formStatus.style.backgroundColor = "#5cb85c";
+                formStatus.style.color = "white";
+
+                // Reset form
+                contactForm.reset();
+
+                // Re-enable button
+                submitButton.disabled = false;
+                submitButton.textContent = "Send Message";
+            }, 2500); // 2.5 seconds delay
         });
 
-        // Run welcome when page loads
-        window.onload = welcomeUser;
+        // Run all functions when page loads
+        window.onload = function() {
+            welcomeUser();
+            addRecentUpdate();
+            modifyExistingElements();
+        };
     </script>
 
 </body>
